@@ -563,3 +563,29 @@ function downloadStory() {
 }
 
 window.onload = loadStories;
+
+// মোবাইলের ব্যাক বাটন হ্যান্ডেল করার ফাংশন
+window.addEventListener('load', function() {
+    window.history.pushState({ page: 'list' }, '');
+});
+
+window.addEventListener('popstate', function(event) {
+    const readerScreen = document.getElementById('reader-screen');
+    const listScreen = document.getElementById('list-screen');
+    
+    // যদি গল্পের বডি ওপেন থাকে
+    if (readerScreen && readerScreen.style.display !== 'none') {
+        // অ্যাপ থেকে বের না হয়ে গল্পের বডি লুকিয়ে মেইন লিস্ট দেখাবে
+        if (typeof closeStory === 'function') {
+            closeStory(); // কোডের ডিফল্ট ক্লোজ ফাংশন কল করবে
+        } else {
+            readerScreen.style.display = 'none';
+            listScreen.style.display = 'block';
+        }
+        // হিস্ট্রি রিসেট করবে যাতে আবার ব্যাক বাটন কাজ করে
+        window.history.pushState({ page: 'list' }, '');
+    } else {
+        // মেইন পেজে থাকলে নরমাল ব্যাক করবে
+        window.history.back();
+    }
+});
