@@ -3,35 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আমার বইয়ের অ্যাপ</title>
+    <title>আমার প্রিমিয়াম লাইব্রেরি</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- অ্যাপের হেডার বার -->
     <div class="app-header">
-        <h2>📚 আমার লাইব্রেরি</h2>
+        <div class="header-content">
+            <h2><i class="fa-solid fa-book-open-reader"></i> আমার লাইব্রেরি</h2>
+            <p>আপনার পছন্দের গল্পের সমাহার</p>
+        </div>
     </div>
 
-    <!-- গল্পের লিস্ট স্ক্রিন (সিরিজ আকার) -->
     <div class="container" id="list-screen">
         <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
             <input type="text" id="search-input" placeholder="গল্প বা অধ্যায় খুঁজুন..." oninput="filterStories()">
         </div>
-        <div class="story-list" id="story-list-container">
-            <!-- জাভাস্ক্রিপ্ট দিয়ে এখানে লিস্ট তৈরি হবে -->
-        </div>
+        
+        <div class="story-list" id="story-list-container"></div>
     </div>
 
-    <!-- গল্প পড়ার মেইন স্ক্রিন (শুরুতে লুকানো থাকবে) -->
     <div class="reader-screen" id="reader-screen">
         <div class="reader-header">
-            <button class="btn-back" onclick="closeReader()">← ফিরে যান</button>
-            <button class="btn-download" onclick="downloadStory()">📥 ডাউনলোড</button>
+            <button class="btn-back" onclick="closeReader()">
+                <i class="fa-solid fa-arrow-left"></i> ফিরে যান
+            </button>
+            <button class="btn-download" onclick="downloadStory()">
+                <i class="fa-solid fa-cloud-arrow-down"></i> ডাউনলোড
+            </button>
         </div>
         <div class="reader-content">
             <h1 id="story-title">গল্পের শিরোনাম</h1>
-            <hr>
+            <div class="divider"></div>
             <p id="story-body">এখানে পুরো লেখাটা আসবে...</p>
         </div>
     </div>
