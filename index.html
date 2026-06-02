@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার বইয়ের অ্যাপ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- অ্যাপের হেডার বার -->
+    <div class="app-header">
+        <h2>📚 আমার লাইব্রেরি</h2>
+    </div>
+
+    <!-- গল্পের লিস্ট স্ক্রিন (সিরিজ আকার) -->
+    <div class="container" id="list-screen">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="গল্প বা অধ্যায় খুঁজুন..." oninput="filterStories()">
+        </div>
+        <div class="story-list" id="story-list-container">
+            <!-- জাভাস্ক্রিপ্ট দিয়ে এখানে লিস্ট তৈরি হবে -->
+        </div>
+    </div>
+
+    <!-- গল্প পড়ার মেইন স্ক্রিন (শুরুতে লুকানো থাকবে) -->
+    <div class="reader-screen" id="reader-screen">
+        <div class="reader-header">
+            <button class="btn-back" onclick="closeReader()">← ফিরে যান</button>
+            <button class="btn-download" onclick="downloadStory()">📥 ডাউনলোড</button>
+        </div>
+        <div class="reader-content">
+            <h1 id="story-title">গল্পের শিরোনাম</h1>
+            <hr>
+            <p id="story-body">এখানে পুরো লেখাটা আসবে...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
