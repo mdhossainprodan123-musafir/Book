@@ -1,5 +1,4 @@
-// 📚 এখানে আপনি আপনার ইচ্ছা মতো অসংখ্য লেখা/গল্প যোগ করতে পারবেন।
-// জাস্ট নিচের ফরম্যাট (title আর body) মেইনটেইন করে কমা (,) দিয়ে বাড়িয়ে যাবেন।
+// 📚 আপনার গল্পের লাইব্রেরি ডাটাবেজ
 const stories = [
     {
         id: 1,
@@ -24,7 +23,7 @@ const stories = [
 
 let currentOpenStory = null;
 
-// অ্যাপ চালু হলে লিস্ট তৈরি করার ফাংশন
+// হোম স্ক্রিনে সিরিজের সুন্দর লিস্ট লোড করার ফাংশন
 function loadStories() {
     const container = document.getElementById('story-list-container');
     container.innerHTML = '';
@@ -35,13 +34,13 @@ function loadStories() {
         div.onclick = () => openReader(story);
         div.innerHTML = `
             <h3>${story.title}</h3>
-            <span class="arrow-icon">→</span>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
         `;
         container.appendChild(div);
     });
 }
 
-// লাইনে ক্লিক করলে পুরো লেখা খোলার ফাংশন
+// লাইন সিরিজে ক্লিক করলে রিডার মোড খোলার ফাংশন
 function openReader(story) {
     currentOpenStory = story;
     document.getElementById('story-title').innerText = story.title;
@@ -49,12 +48,12 @@ function openReader(story) {
     document.getElementById('reader-screen').style.display = 'flex';
 }
 
-// রিডার স্ক্রিন বন্ধ করার ফাংশan
+// রিডার স্ক্রিন বন্ধ করার ফাংশন
 function closeReader() {
     document.getElementById('reader-screen').style.display = 'none';
 }
 
-// সার্চ করার ম্যাজিক ফাংশন
+// রিয়েল-টাইম সার্চ ফিল্টার
 function filterStories() {
     const searchTerm = document.getElementById('search-input').value.toLowerCase();
     const items = document.getElementsByClassName('story-item');
@@ -68,23 +67,40 @@ function filterStories() {
     });
 }
 
-// 📥 ১ সেকেন্ডে টেক্সট ফাইল হিসেবে গল্প ডাউনলোড করার ফাংশন (যা ১০০% কাজ করবে)
+// 📥 প্রফেশনাল ডাউনলোড ম্যানেজার + অ্যানিমেটেড পপ-আপ মেসেজ
 function downloadStory() {
     if (!currentOpenStory) return;
     
-    const textContent = `শিরোনাম: ${currentOpenStory.title}\n\n${currentOpenStory.body}`;
-    const blob = new Blob([textContent], { type: "text/plain;charset=utf-8" });
-    const link = document.createElement("a");
-    
-    // ফাইলের নাম হবে গল্পের শিরোনাম অনুযায়ী
-    link.download = `${currentOpenStory.title}.txt`;
-    link.href = window.URL.createObjectURL(blob);
-    link.style.display = "none";
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+        const textContent = `শিরোনাম: ${currentOpenStory.title}\n\n${currentOpenStory.body}`;
+        const blob = new Blob([textContent], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        
+        link.download = `${currentOpenStory.title}.txt`;
+        link.href = window.URL.createObjectURL(blob);
+        link.style.display = "none";
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // 🎉 ডাউনলোড সফল হলে আধুনিক অ্যানিমেটেড পপ-আপ প্রদর্শন
+        Swal.fire({
+            title: 'ডাউনলোড সম্পন্ন!',
+            text: `"${currentOpenStory.title}" ফাইলটি আপনার ডিভাইসে সেভ হয়েছে।`,
+            icon: 'success',
+            confirmButtonText: 'ধন্যবাদ',
+            confirmButtonColor: '#2a5298',
+            timer: 3000
+        });
+    } catch (error) {
+        Swal.fire({
+            title: 'দুঃখিত!',
+            text: 'ডাউনলোড করতে একটি সমস্যা হয়েছে।',
+            icon: 'error',
+            confirmButtonColor: '#e53e3e'
+        });
+    }
 }
 
-// অ্যাপ ওপেন হলেই যেন লিস্ট লোড হয়
 window.onload = loadStories;
